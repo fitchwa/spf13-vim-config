@@ -1,0 +1,234 @@
+"And then highlight something with the mouse and press Control-C to copy it.
+:vmap <C-C> "2y
+":nnoremap <C-V> "2p
+
+set shiftwidth=8                " Use indents of 4 spaces
+set noexpandtab                 " Tabs are spaces, not tabs when set expandtab
+set tabstop=8                   " An indentation every four columns
+set softtabstop=8               " Let backspace delete indent
+set wrap
+set nofoldenable
+set nolist "jlink we dont want to see the tab space etc.."
+"set listchars=trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+
+let g:ctrlp_max_height=35
+
+
+"start for color and synatex
+if ! has("gui_running")
+    set t_Co=256
+endif
+" feel free to choose :set background=light for a different style
+"set background=dark
+"color peaksea
+"set t_Co=256 "如果是在模拟终端需要把颜色设置成256色
+highlight Comment ctermfg=green guifg=green
+highlight Constant ctermfg=magenta guifg=green
+highlight Normal ctermfg=lightgrey guifg=green
+highlight Structure ctermfg=red guifg=green
+"highlight Functions
+syn match cFunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
+syn match cFunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1
+hi cFunctions gui=NONE cterm=bold  ctermfg=blue
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" cscope setting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("cscope")
+  set csprg=/usr/bin/cscope
+  set csto=1
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+      cs add cscope.out
+  endif
+  set csverb
+endif
+
+nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"for ctrlP fast plugin
+"""
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+
+""""""""""""""""""""""""""""
+" for TagHighlight""
+"""""""""""""""""""""""""""
+"	Class           : Class
+"	DefinedName     : Define
+"	Enumerator      : Enumerator
+"	Function        : Function or method
+"	EnumerationName : Enumeration name
+"	Member          : Member (of structure or class)
+"	Structure       : Structure Name
+"	Type            : Typedef
+"	Union           : Union Name
+"	GlobalConstant  : Global Constant
+"	GlobalVariable  : Global Variable
+"	LocalVariable   : Local Variable
+hi Member ctermfg=Yellow guifg=lightyellow
+"hi Enumerator ctermfg=lightred guifg=lightred
+hi GlobalVariable ctermfg=DarkMagenta guifg=DarkMagenta
+hi DefinedName ctermfg=darkred guifg=darkred
+
+
+""""""""""""""""""""""""""""""""""""""
+"ariline
+"""""""""""""""""""""""""""""""
+" enable tabline
+let g:airline#extensions#tabline#enabled = 1
+" set left separator
+let g:airline#extensions#tabline#left_sep = ' '
+" set left separator which are not editting
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" show buffer number
+let g:airline#extensions#tabline#buffer_nr_show = 1
+" jlink as we use tabbar so we close airline's bufferline
+let g:airline#extensions#bufferline#enabled = 0
+"let g:airline#extensions#bufferline#enabled = 1
+
+
+""""""""""""""""""""""""""""""""
+"tagbar
+""""""""""""""""""""""""""""""""
+"autocmd VimEnter * nested :call tagbar#autoopen(1)
+"autocmd FileType c,cpp nested :TagbarOpen
+
+
+""""""""""""""""""""""""""""""""
+" indentGuide
+""""""""""""""""""""""""""""""""
+"as only space can set size to 1 we let space indent showup
+let g:indent_guides_guide_size = 1 "this is only for softtap(space), not hard tap
+let g:indent_guides_space_guides = 1 "jlink show up space indent
+let g:indent_guides_tab_guides = 0 "jlink not show up indent
+"let g:indent_guides_enable_on_vim_startup = 0
+
+
+""""""""""""""""""""""""""""""""
+"tabbar
+""""""""""""""""""""""""""""""""
+let g:Tb_MapCTabSwitchBufs = 1
+let g:Tb_DebugLevel = 10    " TabBar reports everything
+let g:Tb_DebugMode  = 1     " Writes to a file TabBarDBG.vim
+let g:Tb_cTabSwitchBufs = 1
+let g:Tb_MinSize = 2
+let g:maxTabWidth = 170
+"let g:Tb_cTabSwitchBufs=1
+noremap <Leader>bbb :TbToggle<CR>
+noremap <Leader>bbn :Tbbn<CR>
+noremap <Leader>bbp :Tbbp<CR>
+" we add below to tabbar.vim to enable fast switch:
+"noremap <expr> t ':call <SID>Bf_SwitchTo('.v:count1.')<CR>:<BS>'
+"noremap <expr> <leader>t ':call <SID>Bf_SwitchTo('.nr2char(getchar()).')<CR>:<BS>'
+
+"" enable auto change working dir to the file dir"
+set autochdir
+
+" 2018  3 15 ,lhs rm google python way can indent error
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Indent Python in the Google way.
+"
+"setlocal indentexpr=GetGooglePythonIndent(v:lnum)
+"
+"let s:maxoff = 50 " maximum number of lines to look backwards.
+"
+""function GetGooglePythonIndent(lnum)
+""
+""  " Indent inside parens.
+"  " Align with the open paren unless it is at the end of the line.
+"  " E.g.
+"  "   open_paren_not_at_EOL(100,
+"  "                         (200,
+"  "                          300),
+"  "                         400)
+"  "   open_paren_at_EOL(
+"  "       100, 200, 300, 400)
+"  call cursor(a:lnum, 1)
+"  let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
+"        \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
+"        \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
+"        \ . " =~ '\\(Comment\\|String\\)$'")
+"  if par_line > 0
+"    call cursor(par_line, 1)
+"    if par_col != col("$") - 1
+"      return par_col
+"    endif
+"  endif
+"
+"  " Delegate the rest to the original function.
+"  return GetPythonIndent(a:lnum)
+"
+"endfunction
+"
+"let pyindent_nested_paren="&sw*2"
+"let pyindent_open_paren="&sw*2"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nobackup
+set noswapfile
+
+" add for python file
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+
+let @m = "\tprintk(\"============ %s %d ==========\\n\", __func__, __LINE__);"
+let g:NERDCustomDelimiters = { 'c': { 'left': '//' } }
+
+"有例如，我们需要快速搜索一个选中的文本 ( 这里需要配合插件Ag) :
+" for search, list things in quickfix, blow has shocut to quick quickfix
+function! VisualSelection(direction, extra_filter) range
+	let l:saved_reg = @"
+	execute "normal! vgvy"
+
+	let l:pattern = escape(@", '\\/.*$^~[]')
+	let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+	execute 'Ag '.l:pattern
+
+	let @/ = l:pattern
+	let @" = l:saved_reg
+endfunction
+vnoremap <leader>s :call VisualSelection('ag', '')<CR>
+"?           帮助，显示所有快捷键
+"Enter/o     打开文件
+"O           打开文件并关闭Quickfix
+"go          预览文件，焦点仍然在Quickfix
+"t           新标签页打开文件, can jump and close quickfix
+"q           关闭Quickfix
+"e    to open file and close the quickfix window
+"o    to open (same as enter)
+"go   to preview file (open but maintain focus on ag.vim results)
+"t    to open in new tab
+"T    to open in new tab silently
+"h    to open in horizontal split
+"H    to open in horizontal split silently
+"v    to open in vertical split
+"gv   to open in vertical split silently
+"q    to close the quickfix window
+
+function! Jlink_VisualSelection(direction, extra_filter) range
+	let l:saved_reg = @"
+	execute "normal! viw"
+	execute "normal! p"
+	execute "normal! yiw"
+	let @" = l:saved_reg
+endfunction
+noremap <leader>bv :call Jlink_VisualSelection('ag', '')<CR>
+
+abbr Qall qall
