@@ -31,5 +31,5 @@ sh spf13-vim.sh
 mkdir -p ~/.vim/sessions
 mkdir -p ~/.vim/viminfos
 
-echo "\n vim config start...\n"
+echo "\n vim config end...\n"
 

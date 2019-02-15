@@ -2,10 +2,10 @@
 :vmap <C-C> "2y
 ":nnoremap <C-V> "2p
 
-set shiftwidth=8                " Use indents of 4 spaces
-set noexpandtab                 " Tabs are spaces, not tabs when set expandtab
-set tabstop=8                   " An indentation every four columns
-set softtabstop=8               " Let backspace delete indent
+set shiftwidth=4                " Use indents of 4 spaces
+set expandtab                 " Tabs are spaces, not tabs when set expandtab
+set tabstop=4                   " An indentation every four columns
+set softtabstop=4               " Let backspace delete indent
 set wrap
 set nofoldenable
 set nolist "jlink we dont want to see the tab space etc.."
