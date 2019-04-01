@@ -108,8 +108,8 @@
             Bundle 'tpope/vim-repeat'
             Bundle 'rhysd/conflict-marker.vim'
             Bundle 'jiangmiao/auto-pairs'
-            Bundle 'ctrlpvim/ctrlp.vim'
-            Bundle 'tacahiroy/ctrlp-funky'
+            "Bundle 'ctrlpvim/ctrlp.vim'
+            "Bundle 'tacahiroy/ctrlp-funky'
             Bundle 'terryma/vim-multiple-cursors'
 " manza rm this use my
 "            Bundle 'vim-scripts/sessionman.vim'
@@ -138,6 +138,9 @@
             Bundle 'kana/vim-textobj-user'
             Bundle 'kana/vim-textobj-indent'
             Bundle 'gcmt/wildfire.vim'
+            "Bundle 'tpope/vim-fugitive'
+            Bundle 'majutsushi/tagbar'
+            Bundle 'scrooloose/nerdcommenter'
         endif
     " }
 

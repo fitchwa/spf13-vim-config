@@ -10,7 +10,7 @@ mkdir -p `pwd`/vim_stuff/sessions
 mkdir -p `pwd`/vim_stuff/viminfos
 mkdir -p `pwd`/vim_stuff/bundle
 
-rm -rf ~/.vimswap ~/.vimundo ~/.vimviews ~/.vimbackup
+rm -rf ~/.vimswap ~/.vimundo ~/.vimviews ~/.vimbackup ~/.viminfo
 
 ln -s `pwd`/vim_stuff/vimswap ~/.vimswap
 ln -s `pwd`/vim_stuff/vimundo ~/.vimundo
