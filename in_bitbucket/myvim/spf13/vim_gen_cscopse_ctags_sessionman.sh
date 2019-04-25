@@ -1,6 +1,6 @@
 echo $1
 find -L $1 -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.h' -o -name '*.mk' > cscope.files
-cscope -bkqPC
+cscope -bkqPC -i cscope.files
 # cscope -R is for recursive dir search but as we got cscope.files.
 #ctags -R --exclude=.git
 #need call cscope
